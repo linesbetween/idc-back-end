@@ -1,0 +1,4 @@
+
+3.useSplitWords=true
+3.splitWordsTokenizerRegexp=[\\p{L}][\\p{L}0-9]*|(?:\\$ ?)?[0-9]+(?:\\.[0-9]{2})?%?|\\s+|[\\x80-\\uFFFD]|.
+3.splitWordsIgnoreRegexp=\\s+
