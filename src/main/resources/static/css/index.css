@@ -1,4 +1,4 @@
-@charset "utf-8"
+@charset "utf-8";
     
 html{
  font-size: 12px;
@@ -91,4 +91,7 @@ form{
 
 .article{
     margin-bottom:60px;
+}
+tag{
+    color: blue;
 }
