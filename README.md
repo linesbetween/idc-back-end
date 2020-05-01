@@ -2,8 +2,17 @@
 # A program that reads documents of every kind, guesses what the contents are and creates index of documents.
 
 Run this project:
-run  /src/main/java/com/utpe/dataProcess/DocumentClassifier.java
-training data Set folder      /src/test/data/20news-bydate-train/
+
+in local
+1. clone it on your computer
+2. use IDE to open the "pom.xml" as project
+3. import dependencies (right click on "pom.xml")
+4. run src\main\java\org\utpe\freeopenuniversity\intelligentdocumentclassifier\IntelligentdocumentclassifierApplication.java
+5. visite "http://localhost:8180/"
+
+on server
+1. java -jar intelligentdocumentclassifier-0.0.1-SNAPSHOT.jar &
+2. visite http://66.76.242.195:8180/
 
 ### 1. target
 
