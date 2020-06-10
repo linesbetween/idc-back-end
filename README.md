@@ -19,7 +19,7 @@ on server
 An application can read files, guesses what the contents are and creates and index of documents.
 (1) Open a folder, the classifier will classify the documents automatically
 (2) The Classifier could continue to update 
-(3) Store the Classifier and dataset into database
+(3) Store the Classifier and dataset into database.
   
 
 ### 2. technology
