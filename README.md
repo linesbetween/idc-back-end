@@ -23,24 +23,24 @@ An application can read files, guesses what the contents are and creates and ind
 
 ### 2. technology
 
-* Stanford CoreNLP 
-https://nlp.stanford.edu/wiki/Software/Classifier
+* Stanford CoreNLP    https://nlp.stanford.edu/wiki/Software/Classifier                             
 * Java  
 * Java Spring Boot
 
 
 ### 3. principle
 ⚫ The core part based on the ColumnDataClassifier API of Stanford NLP. It could train data set and predict new files
+
 https://nlp.stanford.edu/nlp/javadoc/javanlp/edu/stanford/nlp/classify/ColumnDataClassifier.html
+
 ⚫ Data folder
+
 intelligentdocumentclassifier\data                        The folder to store data
 intelligentdocumentclassifier\data\train                  The folder which store training data, the app will scan this folder and generate target file for classifier. This folder may have different sub folders named with catogory
 intelligentdocumentclassifier\data\permanent              The folder to generate target file for classifier
 
 
-### 4. next
+### 4. Need to be improved
 
-* Protege
-⚫ Learning and utilizing ontological link distance to figure out the relationship and degree of words, using K means clustering to create its own categories of commonality
 
-(3) Store the Classifier and dataset into database.
+
