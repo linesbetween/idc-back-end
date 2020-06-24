@@ -40,7 +40,4 @@ intelligentdocumentclassifier\data\train                  The folder which store
 intelligentdocumentclassifier\data\permanent              The folder to generate target file for classifier
 
 
-### 4. Need to be improved
-
-
 
