@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.utpe.freeopenuniversity.intelligentdocumentclassifier.beans.PredictionResult;
 import org.utpe.freeopenuniversity.intelligentdocumentclassifier.service.dataProcess.ClassifierOperation;
 
 import org.slf4j.Logger;
@@ -46,9 +47,11 @@ public class MainController {
 
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     @ResponseBody
-    public String engine(@RequestParam(value = "terms") String terms) {
+    public PredictionResult engine(@RequestBody String terms) {
         System.out.println(terms);
-        return ClassifierOperation.predictSentence(columnDataClassifier, terms);
+
+        return new PredictionResult(
+                ClassifierOperation.predictSentence(columnDataClassifier, terms));
 //                documentClassifier.columnDataClassifier.classOf(terms);
     }
 
