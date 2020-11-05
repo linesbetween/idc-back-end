@@ -27,17 +27,23 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+
 //接收前端信息， 返回后端数据
+// Translation: Receive front-end information and return back-end data
 @Controller                              //  set request response
 public class MainController {
-
+    
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     @ResponseBody
     public String index() {
         System.out.println("welcome!");
         return "hello world";
     }
-// 在config产生的bean，在这就直接用
+    // 在config产生的bean，在这就直接用
+    // Translation: The bean generated in config is used directly here 
     private ColumnDataClassifier columnDataClassifier;   // can antowired here ?
 
     @Autowired                            //  upload beans
@@ -89,6 +95,7 @@ public class MainController {
 }
 
 // 连接前端静态页面
+// Translation: Connect the front-end static page
 @Configuration    // why configuration here?  viewController connect java and js
 class MvcConfigurer extends WebMvcConfigurerAdapter {
 
