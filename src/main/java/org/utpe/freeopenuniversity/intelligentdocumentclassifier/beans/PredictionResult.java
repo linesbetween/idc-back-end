@@ -1,6 +1,13 @@
 package org.utpe.freeopenuniversity.intelligentdocumentclassifier.beans;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
 public class PredictionResult {
+
+    @Id
+    public String id;
 
     private String result;
 

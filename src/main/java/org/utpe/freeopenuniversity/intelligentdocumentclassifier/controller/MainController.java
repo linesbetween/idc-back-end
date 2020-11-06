@@ -11,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.utpe.freeopenuniversity.intelligentdocumentclassifier.beans.PredictionResult;
+import org.utpe.freeopenuniversity.intelligentdocumentclassifier.dao.PredictionResultDao;
 import org.utpe.freeopenuniversity.intelligentdocumentclassifier.service.dataProcess.ClassifierOperation;
 
 import org.slf4j.Logger;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.utpe.freeopenuniversity.intelligentdocumentclassifier.service.dataProcess.Constant;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.transform.Result;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -44,17 +46,25 @@ public class MainController {
     public void setCDC(ColumnDataClassifier columnDataClassifier) {
         this.columnDataClassifier = columnDataClassifier;
     }
+    @Autowired
+    private PredictionResultDao predictionResultDao;
 
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     @ResponseBody
     public PredictionResult engine(@RequestBody String terms) {
         System.out.println(terms);
-
-        return new PredictionResult(
+        PredictionResult result = new PredictionResult(
                 ClassifierOperation.predictSentence(columnDataClassifier, terms));
+        predictionResultDao.save(result);
+        return result;
 //                documentClassifier.columnDataClassifier.classOf(terms);
     }
 
+    // Circular View Path Error
+/*    @GetMapping("/allresults")
+    public List<PredictionResult> getSavedResults() {
+        return predictionResultDao.findAll();
+    }*/
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
 

@@ -1,4 +1,9 @@
 package org.utpe.freeopenuniversity.intelligentdocumentclassifier.dao;
 
-public interface PredictionResultDao {
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.utpe.freeopenuniversity.intelligentdocumentclassifier.beans.PredictionResult;
+
+import java.util.List;
+
+public interface PredictionResultDao extends MongoRepository<PredictionResult, String> {
 }
