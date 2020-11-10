@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.utpe.freeopenuniversity.intelligentdocumentclassifier.beans.FileUploaded;
 import org.utpe.freeopenuniversity.intelligentdocumentclassifier.beans.PredictionResult;
 import org.utpe.freeopenuniversity.intelligentdocumentclassifier.dao.PredictionResultDao;
+import org.utpe.freeopenuniversity.intelligentdocumentclassifier.service.FileService;
 import org.utpe.freeopenuniversity.intelligentdocumentclassifier.service.dataProcess.ClassifierOperation;
 
 import org.slf4j.Logger;
@@ -48,6 +50,8 @@ public class MainController {
     }
     @Autowired
     private PredictionResultDao predictionResultDao;
+    @Autowired
+    private FileService fileService;
 
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     @ResponseBody
@@ -81,19 +85,24 @@ public class MainController {
             return "upload failed";
         }
 
+        //save to database, stack overflow error
+        FileUploaded fileToUpload = new FileUploaded(file, color);
+        String res = fileService.saveFile(fileToUpload);
+        System.out.println(res);
+
         String fileName = file.getOriginalFilename();
         String filePath = Constant.DATAPATH.value + File.separator + "category" + File.separator + color;
         File dest = new File(filePath + File.separator + fileName);
         try {
             new File(filePath).mkdirs();
             file.transferTo(dest);
-            LOGGER.info("upload successfully in data/category/" + color + " folder");
-            return "upload successfully in data/category/" + color + " folder";
+            LOGGER.info("save to file successfully in data/category/" + color + " folder");
+            return "save to file successfully in data/category/" + color + " folder";
         } catch (IOException e) {
             System.out.println(dest);
             LOGGER.error(e.toString(), e);
         }
-        return "upload failed！";
+        return "save to folder failed！";
     }
 
 }
