@@ -86,8 +86,7 @@ public class MainController {
         }
 
         //save to database, stack overflow error
-        FileUploaded fileToUpload = new FileUploaded(file, color);
-        String res = fileService.saveFile(fileToUpload);
+        String res = fileService.saveFile(file, color);
         System.out.println(res);
 
         String fileName = file.getOriginalFilename();
