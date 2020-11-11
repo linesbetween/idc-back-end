@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.utpe.freeopenuniversity.intelligentdocumentclassifier.beans.FileUploaded;
 import org.utpe.freeopenuniversity.intelligentdocumentclassifier.beans.PredictionResult;
+import org.utpe.freeopenuniversity.intelligentdocumentclassifier.dao.PredictionResultDao;
+import org.utpe.freeopenuniversity.intelligentdocumentclassifier.service.FileService;
 import org.utpe.freeopenuniversity.intelligentdocumentclassifier.service.dataProcess.ClassifierOperation;
 
 import org.slf4j.Logger;
@@ -23,6 +26,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.utpe.freeopenuniversity.intelligentdocumentclassifier.service.dataProcess.Constant;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.transform.Result;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -50,17 +54,27 @@ public class MainController {
     public void setCDC(ColumnDataClassifier columnDataClassifier) {
         this.columnDataClassifier = columnDataClassifier;
     }
+    @Autowired
+    private PredictionResultDao predictionResultDao;
+    @Autowired
+    private FileService fileService;
 
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     @ResponseBody
     public PredictionResult engine(@RequestBody String terms) {
         System.out.println(terms);
-
-        return new PredictionResult(
+        PredictionResult result = new PredictionResult(
                 ClassifierOperation.predictSentence(columnDataClassifier, terms));
+        predictionResultDao.save(result);
+        return result;
 //                documentClassifier.columnDataClassifier.classOf(terms);
     }
 
+    // Circular View Path Error
+/*    @GetMapping("/allresults")
+    public List<PredictionResult> getSavedResults() {
+        return predictionResultDao.findAll();
+    }*/
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
 
@@ -77,19 +91,23 @@ public class MainController {
             return "upload failed";
         }
 
+        //save to database, stack overflow error
+        String res = fileService.saveFile(file, color);
+        System.out.println(res);
+
         String fileName = file.getOriginalFilename();
         String filePath = Constant.DATAPATH.value + File.separator + "category" + File.separator + color;
         File dest = new File(filePath + File.separator + fileName);
         try {
             new File(filePath).mkdirs();
             file.transferTo(dest);
-            LOGGER.info("upload successfully in data/category/" + color + " folder");
-            return "upload successfully in data/category/" + color + " folder";
+            LOGGER.info("save to file successfully in data/category/" + color + " folder");
+            return "save to file successfully in data/category/" + color + " folder";
         } catch (IOException e) {
             System.out.println(dest);
             LOGGER.error(e.toString(), e);
         }
-        return "upload failed！";
+        return "save to folder failed！";
     }
 
 }
